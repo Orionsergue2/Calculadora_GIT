@@ -1,20 +1,33 @@
 #include <stdio.h>
 #include <math.h>
 #include "calculadora.h"
+#define SIZE 10
+
+typedef struct{
+  char operacion;
+  double resultado_double1;
+  double resultado_double2;
+  double resultado_double3;
+  int resultado_int;
+  int op1;
+  int op2;
+  int op3;
+  double op1d;
+  double op2d;
+  double op3d;
+  
+}OPERACION;
 
 void leer_arreglo(int arr[]);
 int sumar_arreglo(int arreglo[]);
-int suma(int a, int b);
-int resta(int a, int b);
-int multiplicacion(int a, int b);
-double division(int a, int b);
 int factorial(int num);
 double euler(int num);
 int factorial_rec(int num);
 void eq_cuadratica(int a, int b, int c, double *r1, double *r2);
-void fibonacci(int d);
+int fibonacci(int d);
 double pi(int e);
 void circulo_esfera(double r, double *peri, double *area, double *vol);
+void estadistica(int arr[], int size, double *media, double *mediana, double *moda);
 
 int main(void)
 {
@@ -30,9 +43,16 @@ int main(void)
   int e;
   double res_pi;
   double r;
+  OPERACION historial[10];
+  int cuenta = 0;
+  int fn;
 
+  while(1)
+    {
   printf("Que operacion quieres hacer?:\n");
   scanf("%c", &c);
+
+  //if para ver cuando el historial = 10
   
   switch(c)
     {
@@ -44,6 +64,11 @@ int main(void)
       scanf("%d", &b);
       res = suma(a, b);
       printf("%d\n", res);
+      historial[cuenta].operador = c;
+      historial[cuenta].op1 = a;      
+      historial[cuenta].op2 = b;
+      historial[cuenta].resultado_int = res;
+      
       break;
       
     }
@@ -56,6 +81,11 @@ int main(void)
       scanf("%d", &b);
       res = resta(a, b);
       printf("%d\n", res);
+      historial[cuenta].operador = c;
+      historial[cuenta].op1 = a;      
+      historial[cuenta].op2 = b;
+      historial[cuenta].resultado_int = res;
+      
       break;
     }
 
@@ -67,6 +97,11 @@ int main(void)
       scanf("%d", &b);
       res = division(a, b);
       printf("%d\n", res);
+      historial[cuenta].operador = c;
+      historial[cuenta].op1 = a;      
+      historial[cuenta].op2 = b;
+      historial[cuenta].resultado_int = res;
+      
       break;
     }
 
@@ -78,6 +113,11 @@ int main(void)
       scanf("%d", &b);
       res = multiplicacion(a, b);
       printf("%d\n", res);
+      historial[cuenta].operador = c;
+      historial[cuenta].op1 = a;      
+      historial[cuenta].op2 = b;
+      historial[cuenta].resultado_int = res;
+      
       break;
     }
     
@@ -87,6 +127,9 @@ int main(void)
       scanf("%d", &num);
       res = factorial(num);
       printf("%d\n", res);
+      historial[cuenta].operador = c;
+      historial[cuenta].op1 = num;      
+      historial[cuenta].resultado_int = res;      
       break;
     }
 
@@ -96,6 +139,10 @@ int main(void)
       scanf("%d", &num);
       res = factorial_rec(num);
       printf("%d\n", res);
+      historial[cuenta].operador = c;
+      historial[cuenta].op1 = num;      
+      historial[cuenta].resultado_int = res;
+      
       break;
     }
     
@@ -105,6 +152,10 @@ int main(void)
       scanf("%d", &num);
       res_e = euler(num);
       printf("%lf\n", res_e);
+      historial[cuenta].operador = c;
+      historial[cuenta].op1 = num;      
+      historial[cuenta].resultado_double = res;
+      
       break;
     }
 
@@ -121,6 +172,12 @@ int main(void)
 	
 	eq_cuadratica(v1, v2, v3, &res1, &res2);
 	printf("Tus resultados son %lf y %lf\n", res1, res2);
+      historial[cuenta].operador = c;
+      historial[cuenta].op1d = num;
+      historial[cuenta].op2d = num;
+      historial[cuenta].op3d = num;      
+      historial[cuenta].resultado_double = res1;
+      historial[cuenta].resultado_double = res2;      
         break;
       }
      case 'i':
@@ -136,8 +193,12 @@ int main(void)
 
 
 
-	fibonacci(d);
+	fn = fibonacci(d);
+      historial[cuenta].operador = c;
+      historial[cuenta].op1 = d;      
+      historial[cuenta].resultado_int = fn;
 
+      
         break;
       }
      case 'p':
@@ -154,13 +215,17 @@ int main(void)
 	  res_pi = pi(e);
 	  
           printf("Tu aprox de pi es: %lf\n", res_pi); 
-	 
+      historial[cuenta].operador = c;
+      historial[cuenta].op1 = e;      
+      historial[cuenta].resultado_int = res_pi;
+      
         break;
       }
            case 'v':
       {
 	
         printf("Dame tu radio para calcular el perimetro del circulo, area del circulo y volumen del circulo:\n");
+
         scanf("%lf", &r);
 
 	circulo_esfera(r, &v1, &v2, &v3);
@@ -169,6 +234,16 @@ int main(void)
 	
         break;
       }
+           case 'm':
+      {
+      historial[cuenta].operador = c;
+      historial[cuenta].op1d = r;      
+      historial[cuenta].resultado_double1 = v1;
+      historial[cuenta].resultado_double2 = v2;
+      historial[cuenta].resultado_double3 = v3;      
+        break;
+      }      
+    }
     }
 
   return 0;
@@ -197,41 +272,6 @@ int sumar_arreglo(int arreglo[])
   return res;
     }
 */
-
-int suma(int a, int b)
-{
-  int res;
-
-  res = a + b;
-  return res;
-}
-
-int resta(int a, int b)
-{
-  int res;
-
-  res = a - b;
-  return res;
-}
-
-int multiplicacion(int a, int b)
-{
-  int res;
-
-  res = a * b;
-  return res;
-}
-
-double division(int a, int b)
-{
-  double res;
-  double double_a;
-  double double_b;
-  double_a = (double) a;
-  double_b = (double) b;
-  res = double_a / double_b;
-  return res;
-}
 
 int factorial(int num)
 {
@@ -284,7 +324,7 @@ void eq_cuadratica(int a, int b, int c, double *r1, double *r2)
   *r2 = (-b - sqrt(b * b- 4* a* c))/(2 * a);   
     }
 
-void fibonacci(int d)
+int fibonacci(int d)
 {
     int fn0 = 0;
     int fn1 = 1;
@@ -321,6 +361,7 @@ void fibonacci(int d)
         fn0 = 0;
         fn1 = 1;
     }
+    return fn;
 }
 
 double pi(int e)
@@ -367,4 +408,9 @@ void circulo_esfera(double r, double *peri, double *area, double *vol)
 	*vol = (4/3) * res_pi * (r * r * r);
 
 	
+}
+
+void estadistica(int arr[], int size, double *media, double *mediana, double *moda)
+{
+  
 }
