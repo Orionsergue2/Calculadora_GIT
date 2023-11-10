@@ -2,9 +2,10 @@
 #include <math.h>
 #include "calculadora.h"
 #define SIZE 10
+#define MAX_HIST 10
 
 typedef struct{
-  char operacion;
+  char operador;
   double resultado_double1;
   double resultado_double2;
   double resultado_double3;
@@ -35,7 +36,7 @@ int main(void)
   int b;
   int num;
   char c;
-  int numeros[10];
+  int numeros[SIZE];
   int res;
   double res_e;
   double v1, v2, v3, res1, res2;
@@ -43,17 +44,35 @@ int main(void)
   int e;
   double res_pi;
   double r;
-  OPERACION historial[10];
+  OPERACION historial[MAX_HIST];
   int cuenta = 0;
   int fn;
+  int i;
+  int lim;
 
   while(1)
     {
   printf("Que operacion quieres hacer?:\n");
-  scanf("%c", &c);
-
-  //if para ver cuando el historial = 10
+    scanf("%c", &c);
   
+  if(cuenta >= 10)
+    {
+      for(cuenta = MAX_HIST -1; cuenta > 0; cuenta--)
+	{
+	  historial[cuenta] = historial[cuenta - 1]; 
+	}
+    }
+  
+  if(cuenta > 10)
+    {
+      lim = 10;
+	}
+  else
+    {
+      lim = cuenta;
+    }
+
+    
   switch(c)
     {
     case '+':
@@ -64,6 +83,7 @@ int main(void)
       scanf("%d", &b);
       res = suma(a, b);
       printf("%d\n", res);
+      
       historial[cuenta].operador = c;
       historial[cuenta].op1 = a;      
       historial[cuenta].op2 = b;
@@ -81,6 +101,7 @@ int main(void)
       scanf("%d", &b);
       res = resta(a, b);
       printf("%d\n", res);
+      
       historial[cuenta].operador = c;
       historial[cuenta].op1 = a;      
       historial[cuenta].op2 = b;
@@ -154,7 +175,7 @@ int main(void)
       printf("%lf\n", res_e);
       historial[cuenta].operador = c;
       historial[cuenta].op1 = num;      
-      historial[cuenta].resultado_double = res;
+      historial[cuenta].resultado_double1 = res;
       
       break;
     }
@@ -176,8 +197,8 @@ int main(void)
       historial[cuenta].op1d = num;
       historial[cuenta].op2d = num;
       historial[cuenta].op3d = num;      
-      historial[cuenta].resultado_double = res1;
-      historial[cuenta].resultado_double = res2;      
+      historial[cuenta].resultado_double1 = res1;
+      historial[cuenta].resultado_double2 = res2;      
         break;
       }
      case 'i':
@@ -231,19 +252,33 @@ int main(void)
 	circulo_esfera(r, &v1, &v2, &v3);
 
 	printf("Tus resultados son perimetro = %lf area = %lf volumen = %lf\n", v1, v2, v3);
+	      historial[cuenta].operador = c;
+      historial[cuenta].op1 = r;      
+      historial[cuenta].resultado_double1 = v1;
+      historial[cuenta].resultado_double2 = v2;
+      historial[cuenta].resultado_double3 = v3;
 	
         break;
       }
            case 'm':
       {
-      historial[cuenta].operador = c;
-      historial[cuenta].op1d = r;      
-      historial[cuenta].resultado_double1 = v1;
-      historial[cuenta].resultado_double2 = v2;
-      historial[cuenta].resultado_double3 = v3;      
+      
         break;
-      }      
+      }
+           case 'H':
+      {
+          for(i = 0; i < lim; i++)
+    {
+      printf("OPERACION %d:\n Tipo: %c\n Operandos: %d %d %d \n Resultado int: %d \n resultado floats %lf %lf %lf \n ", i + 1, historial[i].operador, historial[i].op1, historial[i].op2,  historial[i].op3, historial[i].resultado_int, historial[i].resultado_double1, historial[i].resultado_double2, historial[i].resultado_double3);
+      printf("\n");
     }
+        break;
+      }
+      
+    }
+
+        getchar();
+    cuenta++;
     }
 
   return 0;
