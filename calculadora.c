@@ -19,7 +19,7 @@ typedef struct{
   
 }OPERACION;
 
-int menu();
+int menu(int op);
 void leer_arreglo(int arr[]);
 int sumar_arreglo(int arreglo[]);
 int factorial(int num);
@@ -27,39 +27,112 @@ double euler(int num);
 int factorial_rec(int num);
 void eq_cuadratica(int a, int b, int c, double *r1, double *r2);
 int fibonacci(int d);
+historial[cuenta].op2d = num;
+historial[cuenta].op3d = num;      
+historial[cuenta].resultado_double1 = res1;
+historial[cuenta].resultado_double2 = res2;      
+break;
+}
+case 'i':
+{
+  printf("Dame un número:\n");
+  scanf("%d", &d);
+
+  while (d < 0)
+    {
+      printf("El número debe ser positivo. Inténtelo de nuevo:\n");
+      scanf("%d", &d);
+    }
+
+
+
+  fn = fibonacci(d);
+  historial[cuenta].operador = c;
+  historial[cuenta].op1 = d;      
+  historial[cuenta].resultado_int = fn;
+
+      
+  break;
+}
+case 'p':
+{
+  printf("Dame la cantidad de términos a utilizar:\n");
+  scanf("%d", &e);
+
+  while(e % 2 == 0)
+    {
+      printf("El número no debe de ser par:\n");
+      scanf("%d", &e);
+    }
+	  
+  res_pi = pi(e);
+	  
+  printf("Tu aprox de pi es: %lf\n", res_pi); 
+  historial[cuenta].operador = c;
+  historial[cuenta].op1 = e;      
+  historial[cuenta].resultado_int = res_pi;
+      
+  break;
+}
+case 'v':
+{
+	
+  printf("Dame tu radio para calcular el perimetro del circulo, area del circulo y volumen del circulo:\n");
+
+  scanf("%lf", &r);
+
+  circulo_esfera(r, &v1, &v2, &v3);
+
+  printf("Tus resultados son perimetro = %lf area = %lf volumen = %lf\n", v1, v2, v3);
+  historial[cuenta].operador = c;
+  historial[cuenta].op1 = r;      
+  historial[cuenta].resultado_double1 = v1;
+  historial[cuenta].resultado_double2 = v2;
+  historial[cuenta].resultado_double3 = v3;
+	
+  break;
+}
+case 'm':
+{
+  printf()
+    scanf();
+	    
+  estadistica(arr[SIZE],size, v1, v2, v3);
+  //historial[cuenta].operador = ;
+  //historial[cuenta].op1 = ;      
+  historial[cuenta].resultado_double1 = v1;
+  historial[cuenta].resultado_double2 = v2;
+  historial[cuenta].resultado_double3 = v3;	    
+  break;
+}
+case 'H':
+{
+  for(i = 0; i < lim; i++)
+    {
+      printf("OPERACION %d:\n Tipo: %c\n Operandos: %d %d %d \n Resultado int: %d \n resultado floats %lf %lf %lf \n ", i + 1, historial[i].operador, historial[i].op1, historial[i].op2,  historial[i].op3, historial[i].resultado_int, historial[i].resultado_double1, historial[i].resultado_double2, historial[i].resultado_double3);
+      printf("\n");
+    }
+  break;
+}
+      
+}
+
+getchar();
+cuenta++;
+}
+}
+
 double pi(int e);
 void circulo_esfera(double r, double *peri, double *area, double *vol);
 void estadistica(int arr[], int size, double *media, double *mediana, double *moda);
 
 int main(void)
 {
+  int op;
 
+  op = menu(op);
   return 0;
 }
-
-/*
-  void leer arreglo(int arr[])
-  {
-  int i;
-
-  for(i = 0; i < 10; i++)
-  {
-  printf("Dame 10 numeros\n"),
-  scanf("%i", &arr[i]);
-  }
-  }
-
-  int sumar_arreglo(int arreglo[])
-  {
-  int i;
-  int res = 0;
-  for(i = 0; i < 10; i++)
-  {
-  res = res + arreglo[i];
-  }
-  return res;
-  }
-*/
 
 int factorial(int num)
 {
@@ -261,9 +334,9 @@ void estadistica(int arr[], int size, double *media, double *mediana, double *mo
   *moda = chimichanga;
 }
 
-int menu()
+int menu(int op)
 {
-    int a;
+  int a;
   int b;
   int num;
   char c;
@@ -280,6 +353,8 @@ int menu()
   int fn;
   int i;
   int lim;
+  int arr[SIZE];
+  int r1, r2, r3;
 
   while(1)
     {
@@ -493,8 +568,16 @@ int menu()
 	  }
 	case 'm':
 	  {
-	    estadistica(arr[],size, *media, *mediana, *moda);
-	      break;
+	    printf("Dame tus numeros: ")
+	    scanf();
+	    
+	    estadistica(arr[SIZE],size, v1, v2, v3);
+	    //historial[cuenta].operador = ;
+	    //historial[cuenta].op1 = ;      
+	    historial[cuenta].resultado_double1 = v1;
+	    historial[cuenta].resultado_double2 = v2;
+	    historial[cuenta].resultado_double3 = v3;	    
+	    break;
 	  }
 	case 'H':
 	  {
